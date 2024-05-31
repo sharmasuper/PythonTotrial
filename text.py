@@ -1,23 +1,34 @@
-# x = int(input("enter the value of x "))
-# match x :
-#     case 0 :
-#             print("x is zero")
-#     case 4 :
-#             print("x is four")
-#     case _ : 
-#               print(x)
+# list method
+L = [11,45,1,2,4,6]
+# print(L)
+# L.append(3)
+# print(L)
+# print(L.index(3))
+# print(L.count(2))
+# difference between copy method
+
+# m = L
+# m[0] = 0
+# print(m)
+# print(L) you looked, frist element of both element are changed
+# but if we will use copy mehod, frist list will not change
+# m = L.copy()
+# m[0] = 0
+# print(L)
+# print(m)
+
+# L.insert(index,element)
+# L.insert(1,99)
+# print(L)
+
+# extend
+m = [900,1000,1100]
+# L.extend(m)
+# print(L)
+
+K = L+m
+print(K)
 
 
 
-x = int(input("enter the value of x "))
-match x :
-    case 0 :
-            print("x is zero")
-    case 4 :
-            print("x is four")
-    case _ if x !=90: 
-              print(x,"is not 90")
-    case _ if x !=80 :
-                print(x,"is not 80")   
-    case _ :
-                print(x)                   
+
