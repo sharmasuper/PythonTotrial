@@ -1,22 +1,14 @@
-def square(n) :
-    # it will come frit
-    '''Take a docs string how
-you are luckey '''
-    print(n**2)
-   
-square(5)
-print(square.__doc__)
+# set understanding
+#  it does not maintain order and takes unique values does not take repitative value
+# list method are same use in set
+# s= {2,3,4} sets are immutable
 
-square(2)    
+harry = set()
+print(type(harry))
+# set are iterable
+info = {1,2,3,4,"hello"}
+for value in info :
+    print(value)
 
-def square(n) :
-    print(n**3)
-    # it give none output
-    '''Take a docs string how 
-you are luckey '''
-    print(n**2)
-   
-square(5)
-print(square.__doc__)
 
-square(2)    
+
