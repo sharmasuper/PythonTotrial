@@ -1,12 +1,8 @@
-ep1 = {122:45,123:89,567:69,670:69}
-ep2 = {22:67,566:90}
-ep1.update(ep2)
-print(ep1)
-# print(ep2)
-# ep1.clear()
-# print(ep1)
-ep1.popitem() # last item delete
-print(ep1)
+tablevalue = input("enter value you want to convert in table  ")
 
-del ep1[122]
-print(ep1)
+try :
+     for i in range(1,11):
+          print(f"{i} * {tablevalue} = > {int(i)*int(tablevalue)}")
+except Exception as e :
+     print("give error ",e)          
+       
