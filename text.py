@@ -1,22 +1,12 @@
-try :
-    
-     with open('data.txt','r') as f :
-        print(type(f))
-        #Move to the 10th byte in the file
-        f.seek(10)
-        # data f.read()
-        print(f.tell())
-        data = f.read(5)
-        print(f.tell())  #whenever to seek
-       
-        #Read the next 5 bytes
-        print(data)
-        #second method
-       with open('Sample.txt','w') as f :
-        f.write("Hello World !")
-        f.truncate(5) # means 5 len limit will print world
-       with open('Sample.txt','r') as f :
-        print(f.read()) 
+try:
+    double = lambda arguments: arguments*2
+    avg  = lambda x,y : (x+y)/2
+    cube = lambda three : three**3
+    print(double(5)) 
+    print(cube(5))
+    print(avg(3,5))
+    # what is Annoymous - 
+    # those function called Annoymous ,which does not know about name 
 
 except Exception as e :
     print("add Error",e)    
