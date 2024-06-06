@@ -1,4 +1,7 @@
-welcome = "hello python ,welcome we are very happy"
+def welcome():
+   print("hey you are welcome from harry")
 
-def hello():
-    print("Hello new python")
+print(__name__)
+if __name__ == '__main__':
+  welcome()  
+

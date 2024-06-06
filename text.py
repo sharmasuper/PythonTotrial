@@ -1,7 +1,8 @@
-from Hello import welcome,hello 
+import Hello
+Hello.welcome() 
 
-print(welcome)
-print(hello())
+
+
 
 
 
