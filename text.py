@@ -1,40 +1,31 @@
-try :
-    def cube(x) :
-        return x**3
-      
-    
-    newl = [1,2,3,4,5,6]
-    # nell = []
-    # for i in newl :
-    #     nell.append(cube(i))
-    # print(nell)  
-    # Map(function,item) method //item - one by one take item
-    newl2 = list(map(cube,newl))
-    print(newl2)
+difference between is operator and ==
+is operator - is operator check exact memory location
+== operator - == operator check only value
+a = 4
+b = "4"
+print( a is b) #fasle exact location on memory
+print(a == b)  #fasle value
 
-    #filter
-    def filter_function (a) :
-        return a>4
-    newnewl = list(filter(filter_function,newl))
-    print(newnewl)
+a = [1,2,43]
+b = [1,2,43]
+print(a is b) #false
+print(a == b) #true
+
+a = 3
+b = 3
+print(a is b)
+print(a == b)
+
+a = (1,2)
+b = (1,2)  #beacause touple is immutable
+print(a is b)
+print(a == b)
 
 
-# except Exception as e :
-#     print("add Error",e)
 
-#reduce funciton 
 
-try:
-    from functools  import reduce
-    numbers = [1,2,3,4,5]
-    def mysum(x,y) :
-      return x + y
-      #reduce(function,element,starting value)
-    sum = reduce(mysum,numbers,5)  
-    print('sum',sum) 
 
-except Exception as e :
-    print("add Error",e)    
+
 
 
 
