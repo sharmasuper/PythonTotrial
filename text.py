@@ -1,22 +1,23 @@
-def greet(fx) :
-    
-    def mfx() :
-        print('Good Morning')
-        fx()
-        print('Thanks for using this function')
-    return mfx
+class Myclass :
+    def __init__(self,value) :
+        self._value = value
 
-@greet
-def hello() :
-    print('hello world') 
-@greet #yya greet(hello)()
-def add() :
-    print("mohit")
+    def show(self) :
+        print(f"Value is : {self._value}")
+    @property
+    def ten_value(self) :    ##geter
+        return 10*self._value
 
-add()
-hello()
+    @ten_value.setter
+    def ten_value(self,new_value) :
+        self._value = new_value/10
+        
 
-
+obj = Myclass(10)
+print(obj.ten_value)
+obj.ten_value = 67
+print(obj.ten_value)
+obj.show()
 
 
 
