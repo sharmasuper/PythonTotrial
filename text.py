@@ -1,16 +1,25 @@
-import requests
-# response = requests.get("https://www.geeksforgeeks.org/shutil-module-in-python/")
-# print(response.text)
-# this method we get html page
-url = "https://jsonplaceholder.typicode.com/posts"
-data = {
-    "title":"foo",
-    "body":"bar",
-    "userId":1
-}
-headers =  {
-    'Content-type' :'application/json;charset=UTF-8',
+# Generators in python are special type of function that allow you to create an iterators sequence of value. 
+# A Generators function return a generatos object .
+# which can be used to generate the value one-by-one as you iterate over it.
+# Generators are a powerful tool for working with large or complex data sets, as they allow ypu to generate the value
+# on - the fly , rather than having to create and store the entire sequence in memory
 
-}
-response = requests.post(url,headers = headers,json=data)
-print(response.text)
+# yeild method-  yeild method create a generator and return a suspended execution 
+# ex- 
+def my_generator():
+    for i in range(5):
+        yield i  
+gen =  my_generator()
+print(next(gen))
+print(next(gen))
+print(next(gen))
+print(next(gen))
+
+
+
+
+
+
+
+
+
