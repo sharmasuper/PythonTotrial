@@ -1,30 +1,36 @@
-class Animal :
-    def __init__(self,name,species) :
-        self.name = name
-        self.species = species
-    def show_details(self):
-        print(f"Name is : {self.name}")    
-        print(f"special : {self.species}")
+# #Time module
+# import time
+# def usingWhile () :
+#     i = 0
+#     while i<5000 :
+#         i = i+1
+#         print(i)
 
-class Dog(Animal) :
-    def __init__(self,name,bread) :
-        Animal.__init__(self,name,species="Dog") 
-        self.bread = bread
-
-    def show_details(self):
-        Animal.show_details(self) 
-        print(f" Breed : {self.bread}")
-
-class GoldenRetriever(Dog) :
-    def __init__(self,name,color) :
-        Dog.__init__(self,name,bread='Golden Retriever') 
-        self.color = color
-
-    def show_details(self) :
-        Dog.show_details(self) 
-        print(f"color : {self.color}")       
+# def usingFor() :
+#     for i in range(5000) :
+#         print(i) 
 
 
-o = GoldenRetriever("tonny","Black")
-o.show_details() 
-print(GoldenRetriever.mro())
+# init = time.time() # return the time in second
+# usingFor()
+# t1 = time.time() - init
+# init = time.time()
+# # print(time.time()-init)
+# # end = time.time()
+# usingWhile()
+# print(time.time() - init)
+# print(t1)
+
+# import time
+# print(4)
+# time.sleep(3)
+# print("this is printed after 3 seconds")
+
+
+import time
+t = time.localtime()
+formatted_time = time.strftime("%Y-%m-%d %H:%M:%S",t)
+print(formatted_time)
+
+
+
