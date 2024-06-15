@@ -1,23 +1,30 @@
-class Employee :
-    def __init__(self,name) :
+class Animal :
+    def __init__(self,name,species) :
         self.name = name
-    def show(self) :
-        print(f"the name is {self.dancer}")
+        self.species = species
+    def show_details(self):
+        print(f"Name is : {self.name}")    
+        print(f"special : {self.species}")
 
-class Dancer :
-    def __init__(self,dance) :
-      self.dancer = dance  
-    def show(self) :
-        print(f"the dancer is {self.dancer}")
-class DancerEmployee(Employee,Dancer) :
-    def __init__(self,dancer,name) :
-        self.dancer = dancer
-        self.name = name
-    def __str__(self) :
-        return f"{self.dancer} and {self.name}"    
-  
-obj = DancerEmployee("priyanka",'Karthak')  
-obj.show()  # jo function pahalai hoga vo pahlai ayga
-# in this condition we need mro() method 
-print(DancerEmployee.mro())
+class Dog(Animal) :
+    def __init__(self,name,bread) :
+        Animal.__init__(self,name,species="Dog") 
+        self.bread = bread
 
+    def show_details(self):
+        Animal.show_details(self) 
+        print(f" Breed : {self.bread}")
+
+class GoldenRetriever(Dog) :
+    def __init__(self,name,color) :
+        Dog.__init__(self,name,bread='Golden Retriever') 
+        self.color = color
+
+    def show_details(self) :
+        Dog.show_details(self) 
+        print(f"color : {self.color}")       
+
+
+o = GoldenRetriever("tonny","Black")
+o.show_details() 
+print(GoldenRetriever.mro())
