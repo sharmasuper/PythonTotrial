@@ -1,18 +1,23 @@
-class Animal :
-    def __init__(self, name, species):
-      self.name = name
-      self.species = species
-    def make_sound(self):
-        print('Sound made by the animal')
+class Employee :
+    def __init__(self,name) :
+        self.name = name
+    def show(self) :
+        print(f"the name is {self.dancer}")
 
-class Dog(Animal) :
-    def __init__(self,name,breed) :
-        Animal.__init__(self,name,species='Dog')
-        self.breed = breed
-    def make_sound(self) :
-        print("Bark !")
+class Dancer :
+    def __init__(self,dance) :
+      self.dancer = dance  
+    def show(self) :
+        print(f"the dancer is {self.dancer}")
+class DancerEmployee(Employee,Dancer) :
+    def __init__(self,dancer,name) :
+        self.dancer = dancer
+        self.name = name
+    def __str__(self) :
+        return f"{self.dancer} and {self.name}"    
+  
+obj = DancerEmployee("priyanka",'Karthak')  
+obj.show()  # jo function pahalai hoga vo pahlai ayga
+# in this condition we need mro() method 
+print(DancerEmployee.mro())
 
-d = Dog("dog",'dogeer')
-d.make_sound()
-a = Animal("dog","Cat")
-a.make_sound()                    
