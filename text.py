@@ -1,37 +1,25 @@
-# In Python's asyncio module, the Task class is used to wrap 
-# coroutines in a way that they can be run concurrently as part of an
-#  event loop. This class allows you to schedule coroutines and manage
-#   their execution.
+# The asyncio.as_completed function in Python is used to create an 
+# iterator that yields tasks as they are completed. This can be 
+# particularly useful when you have multiple asynchronous tasks and
+#  you want to process their results as soon as they become available,
+#   rather than waiting for all tasks to complete.
 
 import asyncio
-
-async def coro1() :
-    for i in range(3) :
-        print(f"coro1 iteration {i}")
-        await asyncio.sleep(1) 
-
-async def coro2() :
-    for i in range(3) :
-        print(f"coro2 iteration {i}")
-        await asyncio.sleep(1.5)
+import random
+async def my_coroutine(id,delay) :
+    print(f"Coroutine {id} started , will sleep for {delay} seconds")
+    await asyncio.sleep(delay)
+    print(f"Coroutine {id} finished")
+    return id
 
 async def main() :
-    # Get the current event loop 
-    # loop = asyncio.get_event_loop()
-    # Create a tasks using asyncio.Task 
-    # task1 = asyncio.Task(coro1(),loop=loop,name ="task1")
-    # task2 = asyncio.Task(coro2(),loop=loop,name='task2') 
-    # esai bhi kar sktai h
-    task1 = asyncio.create_task(coro1())
-    task2 = asyncio.create_task(coro2())
-    await asyncio.gather(task1,task2)
+    tasks = [my_coroutine(i,random.randint(1,5)) for i in range(5)]
+    for task in asyncio.as_completed(tasks) :
+        result = await task 
+    print(result)
+    # print(f"coroutine {result} has completd.")
 
-if __name__ == "__main__" :
-  asyncio.run(main())    
-
-  
-
-
+asyncio.run(main())        
 
 
 
