@@ -1,73 +1,32 @@
-import asyncio 
+import asyncio
 import os
 import signal
 
+async def main():
+    # Subprocess शुरू करें
+    process = await asyncio.create_subprocess_exec(
+        'sleep', '10',
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE
+    )
 
-async def child_task() :
-    print(f"child process {os.getpid()} started")
-    await asyncio.sleep(1) 
-    print(f"child process {os.getpid} exiting")
-    os.exit(0)
+    pid = process.pid
 
+    def child_handler():
+        print(f"Child process {pid} changed state")
 
-def child_handler(pid,returncode,*args):
-    print(f"child process {pid} exited with return code {returncode}")
-    print(f"Additional argunment : {args}")
+    # सिग्नल हैंडलर सेट करें
+    loop = asyncio.get_event_loop()
+    loop.add_child_handler(pid, child_handler)
 
-async def main() :
-    loop = asyncio.get_running_loop()
-    # watcher = asyncio.ThreadedChildWatcher()
-    # watcher.attach_loop(loop)
-    # loop.set_child_watcher(watcher)
+    # कुछ समय के लिए इंतजार करें
+    await asyncio.sleep(2)
 
-    # Start a child process
+    # सिग्नल हैंडलर हटाएं
+    loop.remove_child_handler(pid)
+    print(f"Child handler for process {pid} removed")
 
-    watcher = asyncio.ThreadedChildWatcher()
-    watcher.attach_loop(loop) 
-    loop.set_child_watcher(watcher)
-    # start a child process
-    
-    pid = os.fork()
-    print(pid)
-    if pid == 0 :
-        # this is child process
-        await child_task()
+    # Subprocess को समाप्त करने की प्रतीक्षा करें
+    await process.wait()
 
-    else :
-        # this is the parent prcess 
-        print(f"Parent process {os.getpid()} with child PID {pid}")
-        # Add the child handler
-        watcher.add_child_handler(pid,child_handler,"arg1","arg2")
-        # Keep the event loop runnig to handle the child process
-        
-        try :
-            await asyncio.sleep(10)
-        except asyncio.CancelledError:
-            pass 
-
-if __name__ == '__main__' :
-    asyncio.run(main())         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+asyncio.run(main())
