@@ -1,20 +1,30 @@
 import asyncio 
-# define a coroutine function
-async def hello() :
-    print("Hello")
+async def coroutine1() :
+    print('Coroutine 1 is starting')
     await asyncio.sleep(1)
-    print('World')
-# Create an event loop
+    print('Coroutine 1 is done')
 
-loop = asyncio.get_event_loop()
-try:
-    # Run a coroutine in the event loop
-   
-    loop.run_until_complete(hello())
+async def coroutine2() :
+    print('Coroutine 2 is startine')
+    await asyncio.sleep(1)
+    print('Coroutine 2 is done')
 
-except Exception as e:
-        print("show error ",e)
+# create a event loop
 
-finally : 
-    loop.close() 
+async def main() :
+    print('Creating tasks')
+    task1 = asyncio.create_task(coroutine1())
+    task2 = asyncio.create_task(coroutine2())
+
+    print('Tasks created , waiting for completion')
+    await asyncio.gather(task1,task2)
+
+# Run the event loop 
+
+if __name__ == '__main__':
+    asyncio.run(main())
+
+
+
+
 
