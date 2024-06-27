@@ -1,32 +1,20 @@
-import asyncio
-import os
-import signal
+import asyncio 
+# define a coroutine function
+async def hello() :
+    print("Hello")
+    await asyncio.sleep(1)
+    print('World')
+# Create an event loop
 
-async def main():
-    # Subprocess शुरू करें
-    process = await asyncio.create_subprocess_exec(
-        'sleep', '10',
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE
-    )
+loop = asyncio.get_event_loop()
+try:
+    # Run a coroutine in the event loop
+   
+    loop.run_until_complete(hello())
 
-    pid = process.pid
+except Exception as e:
+        print("show error ",e)
 
-    def child_handler():
-        print(f"Child process {pid} changed state")
+finally : 
+    loop.close() 
 
-    # सिग्नल हैंडलर सेट करें
-    loop = asyncio.get_event_loop()
-    loop.add_child_handler(pid, child_handler)
-
-    # कुछ समय के लिए इंतजार करें
-    await asyncio.sleep(2)
-
-    # सिग्नल हैंडलर हटाएं
-    loop.remove_child_handler(pid)
-    print(f"Child handler for process {pid} removed")
-
-    # Subprocess को समाप्त करने की प्रतीक्षा करें
-    await process.wait()
-
-asyncio.run(main())
