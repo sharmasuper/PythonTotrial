@@ -8,3 +8,56 @@ step6 = An Example Web Application
 step7 = Interacting With the Blocking World
 step8 = Error Hndling , Tesing , Debugging
 
+
+understand that 
+The Async Ecosystem
+1 = latency 
+2 = Concurrency and Paralleslism 
+3 = Short History of Asyncio
+5 = Other contemporary frameworks
+
+
+the maxiimize the usage of a single thread 
+by handling i/o asynchronously , and 
+by enabling concurrent code using coroutines.
+
+
+
+concurrency is dealing many thing at same time 
+ex => fetch from database => fetch from database 2 => update activity log =>Render page
+
+ex => Fetch from database1  =>=>=>                        both step => Render Page
+      fetch from database 2 => update activity log
+
+remote server 
+
+it allow you to connect remote server from local server 
+ex => your screen and keyboard  ==> login  ==> remote server 
+
+remote server(check data it comes and send it) => rlogin ==> but traditional api block data so we use read function
+ event when press we read it and would wait whenever he could not write actually something the program could do anythong
+  this time but on problem is when server is not have any data it block reading function that time we use timeout 
+  but this time entire interaction is very leagy , this time we need to write loop 
+  => your screen and keyboard () 
+
+
+//event loop topic
+
+===> callback1 ====> callback2 ====> callback3 ====> callbackN
+
+
+chapter = asyncio.condition
+
+In Python's asyncio library, asyncio.Condition is a synchronization 
+primitive that can be used to manage access to shared resources. 
+It is often used in conjunction with asyncio.Lock or asyncio.Event 
+to coordinate the access and modification of shared data among 
+multiple coroutines.
+
+The asyncio.Condition class allows coroutines to wait until they 
+are notified, and provides methods to notify one or more coroutines
+ that some condition has been met.
+
+
+
+

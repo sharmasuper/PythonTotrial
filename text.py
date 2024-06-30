@@ -1,23 +1,27 @@
-#In Python, asyncio.CancelledError is an exception that is raised when an asyncio.Task is cancelled. Here's a simple example to illustrate how it works:
+import asyncio
+class SharedResource :
+    def __init__(self) :
+        self.resource = None
+        self.condition = asyncio.Condition()
 
-import asyncio 
+    async def producer(self) :
+        async with self.condition :
+            print('Producer : Producing resource') 
+            self.resource = "Resource data"
+            self.condition.notify_all()
 
-async def some_task() :
-    try :
-        print("Task started")
-        await asyncio.sleep(5)
-    except asyncio.CancelledError : 
-        print("Task was cancelled")  
-        raise  # Re-raise the exception to let the task know it was cancelled
+    async def consumer(self,consumer_id) :
+        async with self.condition :
+            print("consumer resource")
+            await self.condition.wait_for(lambda :self.resource is not None )
+            print(f"Consumer {consumer_id} : Consumer resource : {self.resource} ")
 
 async def main() :
-    task = asyncio.create_task(some_task())
-    # let the task run for a bit
-    await asyncio.sleep(5)
-    # Cancel the task
-    task.cancel()
-    try :
-        await task
-    except asyncio.CancelledError :
-        print("Handeed cancellaintion in main")     
+    shared = SharedResource()
+    producer_task = asyncio.create_task(shared.producer())
+    consumer_task = [asyncio.create_task(shared.consumer(i)) for i in range(3)]
+    await producer_task
+    await asyncio.gather(*consumer_task)   
+
 asyncio.run(main())
+        
