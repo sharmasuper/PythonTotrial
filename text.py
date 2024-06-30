@@ -1,27 +1,29 @@
+# coroutine acquire()method example in python
+#asyncio.Condition.asquare() method
+# The acquire() method in asyncio is used with synchronization 
+# primitives such as asyncio.Lock, asyncio.Semaphore, and 
+# asyncio.Condition to acquire the lock or semaphore.
+ 
 import asyncio
-class SharedResource :
-    def __init__(self) :
-        self.resource = None
-        self.condition = asyncio.Condition()
+async def worker(lock,worker_id) :
+    print(f"Worker {worker_id} is waiting to acquire the lock")
 
-    async def producer(self) :
-        async with self.condition :
-            print('Producer : Producing resource') 
-            self.resource = "Resource data"
-            self.condition.notify_all()
-
-    async def consumer(self,consumer_id) :
-        async with self.condition :
-            print("consumer resource")
-            await self.condition.wait_for(lambda :self.resource is not None )
-            print(f"Consumer {consumer_id} : Consumer resource : {self.resource} ")
+    async with lock :
+        print(f"worker {worker_id} has acquired the lock")
+        await asyncio.sleep(1)
+    print(f"Worker has released the lock {worker_id}")
 
 async def main() :
-    shared = SharedResource()
-    producer_task = asyncio.create_task(shared.producer())
-    consumer_task = [asyncio.create_task(shared.consumer(i)) for i in range(3)]
-    await producer_task
-    await asyncio.gather(*consumer_task)   
+    lock = asyncio.Lock()
+    for i in range(3):
+     await asyncio.gather(worker(lock,i))
 
-asyncio.run(main())
-        
+     
+
+
+asyncio.run(main())    
+
+
+
+
+
