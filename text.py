@@ -1,27 +1,32 @@
-# coroutine acquire()method example in python
-#asyncio.Condition.asquare() method
-# The acquire() method in asyncio is used with synchronization 
-# primitives such as asyncio.Lock, asyncio.Semaphore, and 
-# asyncio.Condition to acquire the lock or semaphore.
- 
-import asyncio
-async def worker(lock,worker_id) :
-    print(f"Worker {worker_id} is waiting to acquire the lock")
+# asyncio.Condition method  
+# Certainly! The asyncio.Condition class in Python is used to wait for some condition to be met. It works similarly to threading.Condition but is designed for use with asyncio's event loop and coroutines.
 
-    async with lock :
-        print(f"worker {worker_id} has acquired the lock")
-        await asyncio.sleep(1)
-    print(f"Worker has released the lock {worker_id}")
+import asyncio 
+
+class SharedState :
+    def __init__(self) :
+        self.value = 0
+
+async def consumer(cond,state) :
+    async with cond :
+         print("Consumer is waiting for condition")
+         await cond.wait()
+         print(f"Consumer recived notification : state.value = {state.value}")
+async def producer(cond,state) :
+    async with cond :
+        await asyncio.sleep(1) # simulate some work
+        state.value += 1
+        print(f"Producer changed state.value to {state.value}")
+        cond.notify_all() # Notify_all waiting consumers
 
 async def main() :
-    lock = asyncio.Lock()
-    for i in range(3):
-     await asyncio.gather(worker(lock,i))
+      cond = asyncio.Condition()      
+      state = SharedState()           
+      consumer_task = asyncio.create_task(consumer(cond,state))
+      producer_task = asyncio.create_task(producer(cond,state))
+      await asyncio.gather(consumer_task,producer_task)
 
-     
-
-
-asyncio.run(main())    
+asyncio.run(main())
 
 
 
