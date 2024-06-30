@@ -1,28 +1,23 @@
-# The asyncio.as_completed function in Python is used to create an 
-# iterator that yields tasks as they are completed. This can be 
-# particularly useful when you have multiple asynchronous tasks and
-#  you want to process their results as soon as they become available,
-#   rather than waiting for all tasks to complete.
+#In Python, asyncio.CancelledError is an exception that is raised when an asyncio.Task is cancelled. Here's a simple example to illustrate how it works:
 
-import asyncio
-import random
-async def my_coroutine(id,delay) :
-    print(f"Coroutine {id} started , will sleep for {delay} seconds")
-    await asyncio.sleep(delay)
-    print(f"Coroutine {id} finished")
-    return id
+import asyncio 
+
+async def some_task() :
+    try :
+        print("Task started")
+        await asyncio.sleep(5)
+    except asyncio.CancelledError : 
+        print("Task was cancelled")  
+        raise  # Re-raise the exception to let the task know it was cancelled
 
 async def main() :
-    tasks = [my_coroutine(i,random.randint(1,5)) for i in range(5)]
-    for task in asyncio.as_completed(tasks) :
-        result = await task 
-    print(result)
-    # print(f"coroutine {result} has completd.")
-
-asyncio.run(main())        
-
-
-
-
-
-
+    task = asyncio.create_task(some_task())
+    # let the task run for a bit
+    await asyncio.sleep(5)
+    # Cancel the task
+    task.cancel()
+    try :
+        await task
+    except asyncio.CancelledError :
+        print("Handeed cancellaintion in main")     
+asyncio.run(main())
