@@ -1,19 +1,16 @@
 import asyncio 
-async def factorial(n,s):
-    if(n<=0):
-      return 1
-    else :
-        e =  n* await factorial(n-1,s)
-        await asyncio.sleep(1)
-        return e 
 
+async def say_hello() :
+    print("Hello world")
+    await asyncio.sleep(1)
+    print("World")
 
-async def main() :
-     result =  await  asyncio.gather(
-                           factorial(5,"a"),
-                           factorial(4,"b"),
-                           factorial(3,"c"),
-                           factorial(2,"d"))
-     print(result)
-
-asyncio.run(main())     
+def main() :
+    loop = asyncio.get_event_loop()
+    try :
+        loop.run_until_complete(say_hello())
+    finally : 
+            #  Close the loop 
+            loop.close() 
+if __name__ == '__main__' :
+    main()            
