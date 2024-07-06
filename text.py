@@ -1,20 +1,21 @@
-import asyncio
+# The asyncio.Future class in Python is used to represent an eventual
+#  result of an asynchronous operation. It's part of the asyncio 
+#  module, which is used for writing concurrent code using the 
+#  async/await syntax.
 
-async def waiter(event) :
-    print('Waiting for the event to the set')
-    await event.wait()
-    print("Event has been set !")
+import asyncio 
 
-async def setter(event):
-    print("setting the event in 2 second")
-    await asyncio.sleep(2)
-    event.set()
-    print("Event has been set!")
+async def set_future_value(fut) :
+    # await asyncio.sleep(2)
+    fut.set_result('! future is done')
 
 async def main() :
-    event = asyncio.Event()
-    waiter_task = asyncio.create_task(waiter(event))
-    setter_task = asyncio.create_task(setter(event))
-    await asyncio.gather(waiter_task,setter_task)
+    loop = asyncio.get_running_loop()
+    fut = loop.create_future()
+
+    asyncio.create_task(set_future_value(fut))     
+    result = await fut 
+    print(result)
 
 asyncio.run(main())
+
