@@ -1,16 +1,15 @@
 import asyncio 
-
 async def say_hello() :
-    print("Hello world")
+    print("Hello world !")
     await asyncio.sleep(1)
     print("World")
 
-def main() :
-    loop = asyncio.get_event_loop()
-    try :
-        loop.run_until_complete(say_hello())
+async def main() :
+    loop = asyncio.get_running_loop()
+    try : 
+        await say_hello()
     finally : 
-            #  Close the loop 
-            loop.close() 
+        loop.stop()        
+
 if __name__ == '__main__' :
-    main()            
+    asyncio.run(main())
