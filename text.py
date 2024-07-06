@@ -1,31 +1,32 @@
-# The add_done_callback method in asyncio.Future allows you to attach
-#  a callback function that will be called when the Future is done 
-#  (either successfully or with an exception).
+# The asyncio.Future.cancel() method is used to cancel a Future in Python's asyncio library. 
 
 import asyncio 
 
-def done_callback(fut) :
-    print(f"future is done {fut.result()}")
-
-async def set_future_value(fut) :
-    await asyncio.sleep(1)
-    fut.set_result("future is done !")
-    print("future value set") 
-
 async def main() :
-    loop = asyncio.get_running_loop()
-    fut = loop.create_future()
-    fut.add_done_callback(done_callback)
-   
-    asyncio.create_task(set_future_value(fut))
-    result = await fut 
-    print(f" main done with result : {result}")
+    future = asyncio.Future()
+    # Schedule a task to complete the future after a delay
+    asyncio.create_task(complete_future(future))
+    #cancel the future before it is completed 
+    await asyncio.sleep(1)
+    future.cancel()
 
+    try : 
+        # Await the future to raise the cancellation exception
+        await future 
+    except asyncio.CancelledError :
+         print('Future was cancelled')
+
+
+async def complete_future(future):
+    await asyncio.sleep(2)
+    if not future.cancelled():
+        future.set_result("Future is done!")
+    
 
 asyncio.run(main())
 
 
-    
+
 
 
 
