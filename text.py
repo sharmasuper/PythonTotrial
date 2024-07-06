@@ -1,19 +1,20 @@
-import asyncio 
+# Sure, asyncio.LifoQueue is a Last In, First Out (LIFO) queue implementation in Python's asyncio module, which is useful for managing asynchronous tasks in a Last-In-First-Out order. Here's a basic example of how to use it:
 
-async def my_coroutine() :
-    await asyncio.sleep(1)
-    print("Coroutine completed")
+import asyncio 
+async def example(queue) :
+    # Putting items into the queue 
+    await queue.put("first")
+    await queue.put("second")
+
+    # Getting items from the queue 
+    item1 = await queue.get()
+    print(f"Got item : {item1}")
+    item2 = await queue.get()
+    print(f"Got item : {item2}")
 
 async def main() :
-    coro = my_coroutine()
-    future = asyncio.ensure_future(coro)
-
-    # Check if objects are futures 
-    print(asyncio.isfuture(coro)) # False, because coro is a coroutine object, not a future
-    print(asyncio.isfuture(future)) 
-    # print("future",future)  
-    # await asyncio.sleep(1)
-    await future
-
-if __name__ == '__main__':
-    asyncio.run(main())      
+        # Create a lifeQUeue 
+        life_queue = asyncio.LifoQueue()
+        await example(life_queue)  
+asyncio.run(main())        
+    
