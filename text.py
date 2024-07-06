@@ -1,21 +1,19 @@
 import asyncio 
+async def factorial(n,s):
+    if(n<=0):
+      return 1
+    else :
+        e =  n* await factorial(n-1,s)
+        await asyncio.sleep(1)
+        return e 
+
 
 async def main() :
-    # create a future object 
-    future = asyncio.Future()
-    # Get the event loop associated with the Future 
-    loop = future.get_loop()
-    # Print the event loop 
-    print(f"The event loop for this future is : {loop}")
-    # Schedule a task that will complete the future after a delay 
-    asyncio.create_task(complete_future(future)) 
+     result =  await  asyncio.gather(
+                           factorial(5,"a"),
+                           factorial(4,"b"),
+                           factorial(3,"c"),
+                           factorial(2,"d"))
+     print(result)
 
-    await future
-    print(f"future result : {future.result()}")
-
-async def complete_future(future) :
-    await asyncio.sleep(2) 
-    future.set_result("Task completed successfully") 
-
-asyncio.run(main())       
-
+asyncio.run(main())     
